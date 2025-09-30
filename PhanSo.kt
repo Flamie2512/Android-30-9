@@ -2,8 +2,6 @@ import kotlin.math.abs
  
 // Lớp Phân số
 class PhanSo(var tu: Int, var mau: Int) {
- 
-    // Khối init chạy ngay sau khi gọi constructor
     init {
         require(mau != 0) { "Mẫu số không được bằng 0" }
     }
@@ -18,7 +16,7 @@ class PhanSo(var tu: Int, var mau: Int) {
         val ucln = gcd(abs(tu), abs(mau))
         tu /= ucln
         mau /= ucln
-        if (mau < 0) { // chuẩn hóa mẫu số > 0
+        if (mau < 0) {
             tu = -tu
             mau = -mau
         }
@@ -49,8 +47,8 @@ class PhanSo(var tu: Int, var mau: Int) {
         return if (b == 0) a else gcd(b, a % b)
     }
 }
- 
-// --------- HÀM MAIN ---------
+
+ //MAIN
 fun main() {
     print("Nhập số lượng phân số: ")
     val n = readln().toInt()
@@ -64,7 +62,7 @@ fun main() {
             print("Nhập mẫu số (≠ 0): ")
             mau = readln().toInt()
         } while (mau == 0)
-        PhanSo(tu, mau) // gọi constructor, init sẽ kiểm tra
+        PhanSo(tu, mau)
     }
  
     println("\nMảng phân số vừa nhập:")
@@ -89,4 +87,5 @@ fun main() {
  
     println("\nMảng sau khi sắp xếp giảm dần:")
     arr.sortedWith { a, b -> b.soSanh(a) }.forEach { it.inPhanSo() }
+
 }
