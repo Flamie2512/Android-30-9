@@ -1,30 +1,28 @@
 import kotlin.math.abs
- 
-// Lớp Phân số
+
+// Lop Phan so
 class PhanSo(var tu: Int, var mau: Int) {
- 
-    // Khối init chạy ngay sau khi gọi constructor
     init {
-        require(mau != 0) { "Mẫu số không được bằng 0" }
+        require(mau != 0) { "Mau so khong duoc bang 0" }
     }
- 
-    // Hàm in phân số
+
+    // Ham in phan so
     fun inPhanSo() {
         println("$tu/$mau")
     }
- 
-    // Hàm rút gọn
+
+    // Ham rut gon
     fun toiGian() {
         val ucln = gcd(abs(tu), abs(mau))
         tu /= ucln
         mau /= ucln
-        if (mau < 0) { // chuẩn hóa mẫu số > 0
+        if (mau < 0) {
             tu = -tu
             mau = -mau
         }
     }
- 
-    // So sánh 2 phân số (-1,0,1)
+
+    // So sanh 2 phan so (-1,0,1)
     fun soSanh(ps: PhanSo): Int {
         val a = tu * ps.mau
         val b = ps.tu * mau
@@ -34,8 +32,8 @@ class PhanSo(var tu: Int, var mau: Int) {
             else -> 1
         }
     }
- 
-    // Cộng 2 phân số
+
+    // Cong 2 phan so
     fun cong(ps: PhanSo): PhanSo {
         val tuMoi = tu * ps.mau + ps.tu * mau
         val mauMoi = mau * ps.mau
@@ -43,50 +41,50 @@ class PhanSo(var tu: Int, var mau: Int) {
         kq.toiGian()
         return kq
     }
- 
-    // Tìm UCLN
+
+    // Tim UCLN
     private fun gcd(a: Int, b: Int): Int {
         return if (b == 0) a else gcd(b, a % b)
     }
 }
- 
-// --------- HÀM MAIN ---------
+
+// --------- HAM MAIN ---------
 fun main() {
-    print("Nhập số lượng phân số: ")
+    print("Nhap so luong phan so: ")
     val n = readln().toInt()
     val arr = Array(n) {
         var tu: Int
         var mau: Int
-        // Lặp cho đến khi nhập mẫu ≠ 0
+        // Lap cho den khi nhap mau != 0
         do {
-            print("Nhập tử số: ")
+            print("Nhap tu so: ")
             tu = readln().toInt()
-            print("Nhập mẫu số (≠ 0): ")
+            print("Nhap mau so (!= 0): ")
             mau = readln().toInt()
         } while (mau == 0)
-        PhanSo(tu, mau) // gọi constructor, init sẽ kiểm tra
+        PhanSo(tu, mau) // goi constructor, init se kiem tra
     }
- 
-    println("\nMảng phân số vừa nhập:")
+
+    println("\nMang phan so vua nhap:")
     arr.forEach { it.inPhanSo() }
- 
-    println("\nMảng sau khi tối giản:")
+
+    println("\nMang sau khi toi gian:")
     arr.forEach {
         it.toiGian()
         it.inPhanSo()
     }
- 
+
     var tong = PhanSo(0, 1)
     for (ps in arr) {
         tong = tong.cong(ps)
     }
-    print("\nTổng các phân số = ")
+    print("\nTong cac phan so = ")
     tong.inPhanSo()
- 
+
     val maxPS = arr.maxWithOrNull { a, b -> a.soSanh(b) }!!
-    print("\nPhân số lớn nhất là: ")
+    print("\nPhan so lon nhat la: ")
     maxPS.inPhanSo()
- 
-    println("\nMảng sau khi sắp xếp giảm dần:")
+
+    println("\nMang sau khi sap xep giam dan:")
     arr.sortedWith { a, b -> b.soSanh(a) }.forEach { it.inPhanSo() }
 }
